@@ -203,9 +203,9 @@ The family arrives with (*starting values*): a trained team of 2 oxen, 1 milk co
 
 ---
 
-## 12. Open Questions
+## 12. Settled Decisions & Tuning Parameters
 
-Decided: predator danger and grasshopper plague are difficulty settings with realistic defaults (sections 8.1 and 8.2).
+Decided: predator danger and grasshopper plague are difficulty settings with realistic defaults (sections 8.1 and 8.2), and:
 
-1. **Horses:** Available from the start in town, or only after the town grows?
-2. **Breaking crews:** Should hiring a breaking crew be part of the first version, or come with the town doc?
+1. **Horses:** Available in town from Year 1, but priced as a premium investment (\$80–\$120). Oxen remain the optimal starting draft animal for heavy sod breaking and timber hauling.
+2. **Breaking Crews:** Available for hire in town from M7 (doc 16) to contract heavy prairie sod breaking for cash (\$2–\$4/acre).

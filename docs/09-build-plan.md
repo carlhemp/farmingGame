@@ -40,16 +40,23 @@ The simulation core is headless (doc 06), so most testing needs no UI.
 
 | Doc | Covers | Needed by |
 | :--- | :--- | :--- |
-| Fire | Grass fuel, spread with wind, firebreaks and back-fires, damage; lightning starts come from doc 11 | M10+ |
-| Town economy | Prices, stock, arrival calendar, travel time | M10+ |
 
 ---
 
-## Open Questions
+## Settled Decisions (Locked for Coding)
 
-1. **Pace:** Are a 20-minute game day at 1x and 12-day seasons the right pace? Settle it in M3 with real costs and in M6 by playing a few seasons.
-2. **Crop storage:** A record per crop voxel, or a packed crop array with records only for trees (doc 05)?
-3. **Awake budget:** How many tiles and sub-chunks can be awake at once on a typical machine?
-4. **Surface flow constant:** What value of $C$ (doc 03) is smooth and stable at the chosen step size?
-5. **Reach values:** Are the material reach numbers in doc 04 fun in play?
-6. **Coarser physics later:** If 6" water and chemistry are still too slow after M3, should they run on coarser blocks (the archive discusses this)?
+1. **Parcels & Claim Size (doc 10, doc 02):** 40-acre parcels ($1,320 \times 1,320\text{ ft}$, $165 \times 165$ chunks of $8\text{ ft}$). The starting claim is 3 adjacent parcels (120 acres).
+2. **Stream Topography (doc 10):** A single main creek traversing the valley plus 1–2 seeded side springs/draws. No initial post-generation erosion pass; mathematical spline and noise meanders provide natural drainage.
+3. **The Scale Rule & Cropping Footprint (doc 13):** Physical work rates remain realistic. A subsistence family naturally cultivates ~3 to 5 acres of crops, with the rest of the 120-acre claim supporting pastures, hay meadows, woodlots, and fire buffers. **No artificial game limits:** ambitious players can scale up to commercial multi-parcel farming by hiring breaking crews, buying extra oxen, and employing seasonal labor.
+4. **Draft Animal & Contractor Progression (doc 14, doc 16):** Oxen are the baseline draft animal. Horses are available in town from Year 1 but cost \$80–\$120. Hired breaking crews are available in town from M7 to break heavy prairie sod for cash (\$2–\$4/acre).
+5. **Crop Storage Architecture (doc 05):** Agricultural fields use a packed 2-byte grid per column in awake sub-chunks (crop type, growth stage, stress). Individual heap records in `plantTable` are reserved strictly for multi-voxel trees and perennial shrubs.
+6. **Concurrency & Buffer Safety (doc 21):** Rayon execution uses double-buffered outbound edge slots (`TileEdgeBuffers`) to eliminate data races and borrow-checker conflicts without mutexes.
+
+---
+
+## Open Questions (To Be Tuned in Milestones)
+
+1. **Surface Flow Constant $C$ (doc 03):** To be tuned during M2 integration tests over a 1% slope to guarantee zero oscillation under the clamping rule.
+2. **Awake Chunk Budget (doc 06):** Baseline cap of 2,048 awake surface tiles (~8 MB) and 1,024 3D sub-chunks (~32 MB) per step. Measured and refined in M3.
+3. **Building Material Reach (doc 04):** Starting values (sod 1, fieldstone 8, pine 16, oak 32 voxels) to be tested in the M8 creative building prototype.
+4. **Disease Dispersion (doc 13):** Starting with simple distance/slope well-risk calculation. Contaminant plume tracing through groundwater deferred to M10+ if needed.

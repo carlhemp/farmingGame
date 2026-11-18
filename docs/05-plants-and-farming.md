@@ -46,15 +46,47 @@ A crop voxel is a **patch of crop**, not one plant. Wheat is sown broadcast at m
 4. **Maturity / Harvest:** Stalks turn golden brown. Crop yield is locked based on cumulative water and nutrient stress experienced during the season.
 5. **Killing Frost / Rot:** If unharvested when ground freezes (`isFrozen = 1`), crop dies and collapses into decaying organic debris.
 
-### 2.2 Frontier Crop Profiles
-* **Field Corn (Maize):** High yield, staple calorie crop. Massive nitrogen consumer. Leaves soil exhausted if planted repeatedly.
-* **Hard Red Winter Wheat:** Sown in autumn, germinates, winters under snow, harvested mid-summer. Moderate feeder.
-* **Prairie Red Clover / Field Peas:** Nitrogen fixers. Symbiotic root bacteria convert atmospheric nitrogen into soil `nitrogen (+2)`, restoring depleted fields.
-* **Potatoes & Turnips:** Heavy calorie yield underground; thrives in friable sandy loam; loose storage in cool root cellars.
+### 2.2 Frontier Crop Profiles & Agronomic Catalog
+
+Growth durations are scaled to the short calendar (~12 days per season, ~48 days per year; doc 06). Days below are game days.
+
+| Crop | Type | Sowing Window | Germination Band | Growth Days | N Use / Fix | Water Need | Frost Tolerance | Main Product & Yield |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :--- | :--- |
+| **Field Corn (Maize)** | Grain | Mid Spring | Band 3 ($50^\circ\text{F}$) | 10 days | Depletes N heavily (-3) | High (PW 8–12) | Tender (dies at $28^\circ\text{F}$) | Ears of corn; staple calorie & hog feed |
+| **Winter Wheat** | Grain | Early Autumn | Band 2 ($40^\circ\text{F}$) | 18 days (overwinters) | Moderate (-1) | Moderate (PW 6–10) | Hardy (survives under snow) | Wheat sheaves → grain flour & straw |
+| **Spring Oats** | Grain | Early Spring | Band 2 ($40^\circ\text{F}$) | 8 days | Moderate (-1) | Moderate (PW 6–10) | Cool-hardy (tolerates light frost) | Threshed oats; horse & settler feed |
+| **Red Clover** | Legume / Forage | Spring or Autumn | Band 2 ($40^\circ\text{F}$) | 6 days | **Fixes N (+2)** | Moderate (PW 7–10) | Very hardy | Hay & green manure; grazing |
+| **Field Peas** | Legume | Early Spring | Band 2 ($40^\circ\text{F}$) | 7 days | **Fixes N (+1)** | Low–Mod (PW 5–8) | Light frost tolerant | Dried peas; soup & winter stores |
+| **Potatoes** | Tuber | Mid Spring | Band 2 ($40^\circ\text{F}$) | 9 days | Modest (-1) | Mod–High (PW 8–11) | Tops freeze; tubers safe underground | Seed potatoes & food tubers; heavy yield |
+| **Turnips** | Brassica / Root | Late Summer | Band 2 ($40^\circ\text{F}$) | 5 days | Low (-1) | Moderate (PW 6–9) | Very hardy (harvest after frost) | Winter livestock feed & table filler |
+| **Pumpkins / Squash** | Cucurbit | Late Spring | Band 3 ($50^\circ\text{F}$) | 10 days | Moderate (-2) | High (PW 8–12) | Very tender | Long-keeping winter squash |
+| **Flax** | Fiber / Oil | Early Spring | Band 2 ($40^\circ\text{F}$) | 8 days | Moderate (-1) | High (PW 8–11) | Cool-hardy | Bundled flax straw for spinning linen |
 
 ---
 
-## 3. Trees, Wind Torque & Forestry
+## 3. Agronomic Workflows & Harvesting
+
+### 3.1 Broadcast vs. Hill Planting
+* **Drill / Broadcast (Small Grains, Clover):** Wheat, oats, and clover are broadcast thickly. Settlers drag a harrow across the plowed field to cover the seed. One $6\text{"}$ voxel represents a dense cluster of stalks.
+* **Check-Row / Hill Planting (Corn, Squash):** Field corn and squash are planted in distinct "hills" spaced 3–4 feet apart (6–8 voxels). This allows cross-cultivation with a horse/ox-drawn hoe to eradicate prairie weeds between rows.
+
+### 3.2 Crop Storage Architecture Decision
+To prevent millions of entity records in 40-acre fields:
+* **Packed Crop Grid:** Crop fields do **not** allocate individual `plantTable` heap records per voxel. Instead, each column's surface/soil record tracks crop type (5 bits), growth stage (3 bits), and cumulative stress (4 bits) packed into a dedicated 2-byte field in awake agricultural sub-chunks.
+* **Large Entities Only in `plantTable`:** Only trees, perennial shrubs, and specialized structural plants maintain discrete global IDs and records in `plantTable[entityId]`.
+
+### 3.3 Threshing & Processing
+* **Small Grains (Wheat, Oats):** Cut with a sickle or grain cradle (doc 17). Bundled into shocks to dry in the field. Brought into the barn for indoor winter flailing with a wooden flail to separate grain from chaff, followed by winnowing.
+* **Corn:** Ears are snapped by hand directly off stalks in late autumn, thrown into a farm wagon, and hauled to the slatted corn crib for dry air curing.
+
+### 3.4 Hay Making & Curing Workflow
+1. **Mowing:** In mid-summer, meadow grass or red clover is designated and cut using a scythe.
+2. **Curing:** The cut grass rests on the ground. Its `grass_dry` field (doc 02) rises under warm summer sun and wind (doc 11). If rain falls during curing, `moisture_rot` accumulates and hay quality degrades.
+3. **Cock & Stack:** Once `grass_dry > 200`, settlers rake hay into mounds (shocks/cocks), haul it by wagon, and pack it into an elevated hay barrack or barn loft for winter livestock feed (doc 14).
+
+---
+
+## 4. Trees, Wind Torque & Forestry
 
 Trees are massive multi-voxel entities stored in `plantTable[entityId]` with parameters: species, age, height, trunk diameter, canopy volume, and root depth.
 
@@ -74,7 +106,7 @@ Trees are massive multi-voxel entities stored in `plantTable[entityId]` with par
                               └─────────┘  (Weakened when poreWater is saturated)
 ```
 
-### 3.1 Wind Damage Mechanics
+### 4.1 Wind Damage Mechanics
 High frontier winds (summer thunderstorms, prairie blizzards) apply dynamic torque to trees:
 $$\text{Wind Force } (F) = \text{Wind Speed}^2 \times \text{Canopy Area} \times \text{Canopy Density}$$
 $$\text{Bending Torque } (\tau) = F \times \text{Canopy Center Height}$$
@@ -83,11 +115,11 @@ The engine compares bending torque $\tau$ against two resisting forces:
 1. **Trunk Strength:** Governed by trunk diameter and species (dense White Oak vs. soft White Pine).
 2. **Root Anchorage:** Governed by root depth, lateral root spread, and soil moisture (`poreWater`).
 
-### 3.2 Uprooting vs. Trunk Snap
+### 4.2 Uprooting vs. Trunk Snap
 * **Wet Soil Toppling (Uprooting):** When heavy rains saturate the soil (`poreWater = 14–15`), the muddy soil loses its grip on roots. Root anchorage fails before the trunk snaps. The entire tree uproots, lifting a root-wad and leaving a large crater in the soil.
 * **Dry Soil Snapping:** In dry, compacted soil, roots hold firm. If storm winds exceed trunk strength, the tree snaps low on the trunk.
 
-### 3.3 Tree Felling & Timber Harvesting
+### 4.3 Tree Felling & Timber Harvesting
 * **Axe Chopping:** Settlers designated to fell trees strike the base of the trunk with axes, reducing trunk integrity over several game minutes.
 * **Rigid-Body Felling:** When cut, the tree detaches, calculates a fall angle based on wind and cut direction, and falls as a rigid multi-segment body.
 * **Voxel Stamping:** Upon hitting the ground, the fallen trunk restamps into harvestable timber voxels (`matterState = 5 [Loose Item]`, `materialId = oak_timber`), ready for settlers to buck into logs and haul to the woodpile.

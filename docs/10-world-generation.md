@@ -133,9 +133,9 @@ Each column's soil is a stack of layers (horizons). The landform sets the layers
 
 ---
 
-## 8. Open Questions
+## 8. Settled Decisions & Tuning Parameters
 
-1. **Parcels:** Do 40-acre squares and a 3-parcel start feel right?
-2. **One-time erosion pass:** Should world creation run a single erosion pass to make valleys look more natural? It would be done once, never over time.
-3. **More than one stream:** Should larger valleys get side creeks and springs as standard, or only sometimes?
-4. **Other landscapes later:** A forested eastern valley or a drier western plain could be added later as world options.
+1. **Parcels:** 40-acre squares ($1,320\text{ ft} \times 1,320\text{ ft}$) on a $3 \times 3$ grid across the 500-acre valley, with a 3-parcel (120-acre) starting claim.
+2. **Erosion Pass:** No separate post-generation erosion simulation pass during world creation; analytical spline channels, flow accumulation, and octave noise provide natural drainage without startup latency.
+3. **Streams:** One main creek traverses the valley with fixed upstream boundary inflow, supplemented by 1–2 seeded hillside springs and draws.
+4. **Other Landscapes (Future):** Drier western shortgrass plains or eastern hardwood forests remain options for future world generator versions.

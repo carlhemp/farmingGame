@@ -254,10 +254,10 @@ Most of these can be turned on or off as settings.
 
 ---
 
-## 13. Open Questions
+## 13. Settled Decisions & Tuning Parameters
 
-Decided: an optional weekly rest day (8.3), frontier illness worked out from the land (10.1), the family growing and changing over time (11), and animals getting their own doc before M7 (doc 14).
+Decided: an optional weekly rest day (8.3), frontier illness worked out from the land (10.1), the family growing and changing over time (11), animals getting their own doc before M7 (doc 14), and:
 
-1. **Scale rule (section 2):** Keep real work speed and smaller fields, or speed up big field tasks so fields stay closer to real size? Still being thought over.
-2. **Family order:** Which of the family changes in section 11 come first?
-3. **Contamination plume:** Is the simple well-risk model enough, or should contamination be tracked through the groundwater?
+1. **Scale Rule & Unbounded Play (Section 2):** Real-world physical work rates apply. A subsistence homesteader naturally manages ~3–5 acres of crops alongside pasture and woodlots. **Crucially, there is no artificial ceiling:** players with capital, hired breaking crews, and extra ox teams can scale up their plowed acreage as large as their logistics can support.
+2. **Family Progression Order (Section 11):** Arrival of relatives, marriages, and hired labor are scheduled deterministically via the seed-driven `EventCalendar` (doc 20).
+3. **Well Contamination:** Evaluated via simple topographical distance, uphill slope, and soil porosity vectors. Fully dynamic 3D groundwater contaminant dispersion is deferred to M10+ if needed.

@@ -141,7 +141,7 @@ If 20 settlers scan 5,000 stockpile voxels for items every tick, the job search 
 | **Voxel Layout & Storage** | 02 | Specified | Measure memory and compression in M1 to M3 |
 | **Hydrology & Surface Layer** | 03 | Specified | Prove conservation and drainage on a test map (M2) |
 | **Voxel Building & Support** | 04 | Specified | Prototype support spreading and rooms (M7) |
-| **Plants & Farming** | 05 | Partly specified | Decide crop storage (open question) |
+| **Plants & Farming** | 05 | Specified | Packed crop grid decision, agronomic crop catalog (M6) |
 | **Sim Engine & Time Scale** | 06 | Working assumptions | Tune day length and tick budget (M3) |
 | **Camera & UI** | 07 | Specified | Build the viewer (M1) |
 | **Stockpiles & Logistics** | 08 | Partly specified | Needs settler AI design |
@@ -150,4 +150,10 @@ If 20 settlers scan 5,000 stockpile voxels for items every tick, the job search 
 | **World Generation** | 10 | Specified | Build the coarse map and detail stage (M1) |
 | **Save & Load** | 02, 12 | Specified | Build and measure save size (M4) |
 | **Animals** | 14 | Specified | Oxen and the plow rig (M7); the rest in M10+ |
-| **Fire, Town Economy** | 01 (overview) | Not written | Later milestones |
+| **Fire** | 15 | Specified | Prairie fire and building fire (M10+) |
+| **Town & Economy** | 16 | Specified | Town trips, prices, land office, town growth (M10+) |
+| **Tools, Crafting & Workshops** | 17 | Specified | Tool wear, bench crafting, iron dependency (M10+) |
+| **Food, Cooking & Preservation** | 18 | Specified | Meals, nutrition, variety, salting, smoking (M10+) |
+| **Controls, UI & Settings** | 19 | Specified | Keymap, modal navigation, new game flow, settings (M1+) |
+| **Neighbors & Events** | 20 | Specified | Seeded event schedule, visitors, mutual aid, epidemics (M10+) |
+| **Architecture Contracts** | 21 | Specified | Concurrency buffers, TUI traits, coordinates, entity states (M0) |

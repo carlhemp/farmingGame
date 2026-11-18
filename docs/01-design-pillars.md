@@ -108,4 +108,4 @@ To keep CPU budgets focused on deep physical simulation, **the town is not simul
 * **Dynamic Supply & Demand:**
   * Grain and pork prices fluctuate based on regional frontier harvests and transport availability.
   * Selling a bumper crop of wheat drops local prices, incentivizing diversification (wool, smoked bacon, cider).
-* **Town Upgrades:** As the player and surrounding parcels settle and prosper, the town unlocks new infrastructure: a grist mill (turning grain into flour at higher profit), a blacksmith (iron tools and wagon tires), and eventually a railroad depot with a telegraph office that posts weather forecasts (doc 11).
+* **Town Development:** The town develops organically over the years based on regional settlement and commerce (doc 16). Rather than arbitrary player unlock gates, businesses open independently: an independent grist mill makes flour milling cheaper and faster, a local blacksmith eliminates distant freight markups on iron tools, and eventual railroad arrival opens regional export markets. Everything physically possible on the frontier is open from Day 1 if you have the resources and physical labor to do it.

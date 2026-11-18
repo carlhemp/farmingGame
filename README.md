@@ -68,6 +68,27 @@ A deep, deterministic 6-inch voxel farming and homesteading simulation, planned 
 14. [docs/14-animals.md](docs/14-animals.md)
     *Oxen teams and rigs, pulling power, grazing and winter feed, pastures and shelter, animal health, breeding and products, and wild animals.*
 
+15. [docs/15-fire.md](docs/15-fire.md)
+    *Grass fuel load and dryness, prairie fire spread and wind direction, firebreaks and back-fires, building and chimney fire, settler response, fire as a land-clearing tool, and fire difficulty settings.*
+
+16. [docs/16-town-and-economy.md](docs/16-town-and-economy.md)
+    *Travel time and costs, the arrival calendar, stock and prices, selling grain and farm goods, the bumper-crop problem, the land office, hiring hands and breaking crews, town growth (mill, blacksmith, railroad, telegraph), and neighbors.*
+
+17. [docs/17-tools-crafting-and-workshops.md](docs/17-tools-crafting-and-workshops.md)
+    *Tool list and iron dependencies, condition and wear, breaking and re-hafting, the tool shed, splitting and hewing, sod cutting, fieldstone collection, the carpenter's bench and its outputs, skill and quality, and what must come from town.*
+
+18. [docs/18-food-cooking-and-preservation.md](docs/18-food-cooking-and-preservation.md)
+    *Food types and nutrition, daily needs by role, meals and cooking fuel, variety and spirits, the kitchen garden, autumn butchering, salting and smoking, churning, drying, and food storage.*
+
+19. [docs/19-controls-ui-and-settings.md](docs/19-controls-ui-and-settings.md)
+    *Modal keyboard controls, designate/build/stockpile/zone/workshop keys, inspect panel, work tab, job and alert lists, new-game flow, and consolidated difficulty/gameplay settings.*
+
+20. [docs/20-neighbors-and-events.md](docs/20-neighbors-and-events.md)
+    *Seeded valley settlement progression, neighbor profiles, mutual aid and barn-raisings, itinerant peddlers and drovers, letters and migrating kinfolk, cholera outbreaks, and locust swarms.*
+
+21. [docs/21-technical-architecture-contracts.md](docs/21-technical-architecture-contracts.md)
+    *Rayon double-buffered edge exchange protocol, Core-to-TUI WorldView and CommandQueue interfaces, AgentPos ground-binding coordinate rules, and EntityRef lifecycle transitions.*
+
 ---
 
 ## Historical Notes & Archives
